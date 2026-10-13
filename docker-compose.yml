@@ -1,0 +1,11 @@
+version: "3.9"
+
+services:
+  fraud-detector:
+    build: .
+    ports:
+      - "8501:8501"
+    environment:
+      PROJECT_ROOT: /app
+      STREAMLIT_SERVER_ADDRESS: 0.0.0.0
+      STREAMLIT_SERVER_PORT: 8501

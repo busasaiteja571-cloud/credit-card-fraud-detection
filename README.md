@@ -51,8 +51,15 @@ pip install -r requirements.txt
 # Download creditcard.csv from Kaggle into the data/ folder, then:
 python -m src.train            # trains and saves the pipeline
 python -m src.predict          # quick demo
-streamlit run app.py           # web app
+streamlit run app.py --server.address 0.0.0.0 --server.port 8501
 ```
+
+## Deployment notes
+- Render deployment is configured in [render.yaml](./render.yaml). Push the repository to GitHub, then in Render choose **New > Blueprint** and connect that repository. Render will create the web service from the Blueprint; it uses a paid Starter instance so the service stays available.
+- Include `models/fraud_pipeline.pkl` and `models/metrics.json` in the Git repository. The ignore rules intentionally allow these two deployment artifacts while keeping other model files and the large Kaggle dataset out. The model bundle was serialized with the versions pinned in `requirements-deploy.txt`; retrain and replace both artifacts together when updating the deployed model.
+- The Docker image does not include `data/creditcard.csv`. The random sample demo is unavailable in the cloud deployment, but CSV uploads and predictions work without the source dataset.
+- For a local container, run `docker compose up --build` and open http://localhost:8501.
+- Optional path overrides for other runtimes: `PROJECT_ROOT`, `DATA_PATH`, `MODELS_DIR`, `PIPELINE_PATH`, and `METRICS_PATH`.
 
 ## Key learnings
 - Accuracy is useless on imbalanced data; PR-AUC and recall/precision matter.

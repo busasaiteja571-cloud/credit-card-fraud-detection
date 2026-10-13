@@ -1,18 +1,17 @@
 # config.py - all paths and settings live here, so we change them in ONE place
 
+import os
 from pathlib import Path
 
 # BASE_DIR = the project root folder.
 # __file__ is this file (src/config.py); .parent.parent goes up two levels to the project root
-BASE_DIR = Path(__file__).resolve().parent.parent
+BASE_DIR = Path(os.environ.get("PROJECT_ROOT", Path(__file__).resolve().parent.parent))
 
-# Where the raw dataset is
-DATA_PATH = BASE_DIR / "data" / "creditcard.csv"
-
-# Where trained files are saved
-MODELS_DIR = BASE_DIR / "models"
-PIPELINE_PATH = MODELS_DIR / "fraud_pipeline.pkl"   # model + threshold bundle
-METRICS_PATH = MODELS_DIR / "metrics.json"          # final test scores
+# Allow runtime overrides for cloud/container deployments
+DATA_PATH = Path(os.environ.get("DATA_PATH", BASE_DIR / "data" / "creditcard.csv"))
+MODELS_DIR = Path(os.environ.get("MODELS_DIR", BASE_DIR / "models"))
+PIPELINE_PATH = Path(os.environ.get("PIPELINE_PATH", MODELS_DIR / "fraud_pipeline.pkl"))
+METRICS_PATH = Path(os.environ.get("METRICS_PATH", MODELS_DIR / "metrics.json"))
 
 # Name of the column we want to predict
 TARGET = "Class"

@@ -9,6 +9,11 @@ from src import config
 
 def load_bundle():
     """Load the saved pipeline and its threshold."""
+    if not config.PIPELINE_PATH.exists():
+        raise FileNotFoundError(
+            f"Model bundle not found at {config.PIPELINE_PATH}. "
+            "Run `python -m src.train` before deploying or starting the app."
+        )
     return joblib.load(config.PIPELINE_PATH)
 
 

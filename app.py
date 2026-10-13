@@ -45,12 +45,12 @@ tab_demo, tab_upload = st.tabs(["Try a sample", "Upload a CSV"])
 
 # ----- Tab 1: pick a random transaction from the dataset -----
 with tab_demo:
-    choice = st.radio("Pick a transaction type", ["Known fraud", "Known normal"], horizontal=True)
+    if not config.DATA_PATH.exists():
+        st.info("The sample dataset isn't included in this deployment. Upload a CSV in the other tab to try predictions.")
+    else:
+        choice = st.radio("Pick a transaction type", ["Known fraud", "Known normal"], horizontal=True)
 
-    if st.button("Pick a random transaction and predict"):
-        if not config.DATA_PATH.exists():
-            st.error("Dataset not found. Put creditcard.csv in the data/ folder.")
-        else:
+        if st.button("Pick a random transaction and predict"):
             df = load_dataset()
 
             # 1 = fraud, 0 = normal

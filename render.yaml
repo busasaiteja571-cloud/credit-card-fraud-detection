@@ -1,0 +1,15 @@
+services:
+  - type: web
+    name: credit-card-fraud-detector
+    runtime: docker
+    plan: starter
+    region: oregon
+    dockerfilePath: ./Dockerfile
+    dockerContext: .
+    healthCheckPath: /_stcore/health
+    autoDeploy: true
+    envVars:
+      - key: PROJECT_ROOT
+        value: /app
+      - key: PYTHONUNBUFFERED
+        value: "1"

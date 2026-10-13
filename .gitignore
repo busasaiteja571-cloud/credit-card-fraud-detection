@@ -1,6 +1,8 @@
 venv/
 data/
-models/
+models/*
+!models/fraud_pipeline.pkl
+!models/metrics.json
 __pycache__/
 .ipynb_checkpoints/
 __pycache__/

@@ -1,0 +1,11 @@
+venv/
+__pycache__/
+*.pyc
+.git/
+.gitignore
+.ipynb_checkpoints/
+notebooks/
+data/
+models/*
+!models/fraud_pipeline.pkl
+!models/metrics.json
